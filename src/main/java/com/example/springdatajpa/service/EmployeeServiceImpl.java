@@ -8,10 +8,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepo employeeRepo;
@@ -21,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepo = employeeRepo;
     }
 
-    public List<Employee> findAll() {
+    public Iterable<Employee> findAll() {
         return employeeRepo.findAll();
     }
 
@@ -29,5 +31,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
         return employeeRepo.findAll(pageable);
     }
+
+    public void performBatchSave(List<Employee> employees) {
+        employeeRepo.saveAll(employees);
+    }
+
+    public void deleteByNameContaining(String partialName) {
+       // employeeRepo.deleteByNameContaining(partialName);
+        employeeRepo.deleteByPartOfName(partialName);
+    }
+
+    public void deleteInBatch(Iterable<Employee> entities){
+        employeeRepo.deleteInBatch(entities);
+    };
 
 }
