@@ -67,7 +67,7 @@ public class SpringConfig {
         factoryBean.setPackagesToScan("com.example.springdatajpa.model"); // Пакет, содержащий ваши сущности
         factoryBean.setJpaVendorAdapter(vendorAdapter);
         Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("spring.jpa.dialect", "org.hibernate.dialect.MySQLDialect");
+        hibernateProperties.setProperty("spring.jpa.dialect", "org.hibernate.dialect.MySQL8Dialect");
         hibernateProperties.setProperty("spring.jpa.show-sql", "true");
         factoryBean.setJpaProperties(hibernateProperties);
 
